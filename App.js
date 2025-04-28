@@ -39,14 +39,39 @@ export default function App() {
       Alert.alert('Błąd', 'Nie udało się dodać danych do bazy danych');
     }
   }
+
   return (
     <View style={styles.container}>
-      <Text>Spalanie wyniosło {fuelPer100} litrów na 100 kilometrów.</Text>
-      <TextInput placeholder='Ilość spalonego paliwa' value={fuelBurnt} onChangeText={setFuelBurnt} keyboardType='numeric' />
-      <TextInput placeholder='Ilość przejechanych kilometrów' value={distance} onChangeText={setDistance} keyboardType='numeric' />
-      <TouchableOpacity onPress={calculateFuelPer100}>
-        <Text>Oblicz</Text>
+      <Text style={styles.title}>Kalkulator Spalania</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Ilość spalonego paliwa (L)"
+        value={fuelBurnt}
+        onChangeText={setFuelBurnt}
+        keyboardType="numeric"
+        placeholderTextColor="#888"
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Ilość przejechanych kilometrów (km)"
+        value={distance}
+        onChangeText={setDistance}
+        keyboardType="numeric"
+        placeholderTextColor="#888"
+      />
+
+      <TouchableOpacity style={styles.button} onPress={calculateFuelPer100}>
+        <Text style={styles.buttonText}>Oblicz</Text>
       </TouchableOpacity>
+
+      {fuelPer100 !== '' && (
+        <Text style={styles.result}>
+          Spalanie: {fuelPer100} L/100km
+        </Text>
+      )}
+
       <StatusBar style="auto" />
     </View>
   );
@@ -55,8 +80,46 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f0f4f7',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 30,
+    color: '#333',
+  },
+  input: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    fontSize: 16,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
+  button: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#4caf50',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  result: {
+    marginTop: 30,
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
   },
 });
