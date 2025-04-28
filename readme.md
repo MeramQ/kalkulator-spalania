@@ -1,0 +1,1 @@
+Prosty kalkulator spalania zapisujący dane w Firebase
