@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Alert, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { db } from './firebaseConfig';
+import { collection, addDoc } from 'firebase/firestore';
 
 export default function App() {
   const [fuelBurnt, setFuelBurnt] = useState('');
@@ -22,6 +24,20 @@ export default function App() {
     setFuelPer100(result.toFixed(2));
     setFuelBurnt('');
     setDistance('');
+    addToDatabase();
+  }
+
+  const addToDatabase = async () => {
+    try {
+      await addDoc(collection(db, 'fuelCalculations'), {
+        fuelBurnt: parseFloat(fuelBurnt),
+        distance: parseFloat(distance),
+        fuelPer100: fuelPer100
+      });
+      Alert.alert('Sukces', 'Dane zostały dodane do bazy danych');
+    } catch (error) {
+      Alert.alert('Błąd', 'Nie udało się dodać danych do bazy danych');
+    }
   }
   return (
     <View style={styles.container}>
