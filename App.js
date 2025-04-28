@@ -24,15 +24,15 @@ export default function App() {
     setFuelPer100(result.toFixed(2));
     setFuelBurnt('');
     setDistance('');
-    addToDatabase();
+    addToDatabase(result.toFixed(2));
   }
 
-  const addToDatabase = async () => {
+  const addToDatabase = async (fuelResult) => {
     try {
       await addDoc(collection(db, 'fuelCalculations'), {
         fuelBurnt: parseFloat(fuelBurnt),
         distance: parseFloat(distance),
-        fuelPer100: fuelPer100
+        fuelPer100: fuelResult,
       });
       Alert.alert('Sukces', 'Dane zostały dodane do bazy danych');
     } catch (error) {
